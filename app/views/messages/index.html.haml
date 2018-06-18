@@ -1,0 +1,33 @@
+.side__bar
+  .side__header
+    .side__header__name
+      =current_user.name
+      %i
+        = link_to new_group_path do
+          = fa_icon 'pencil-square-o', class: 'icon'
+      %i
+        = link_to edit_user_path(current_user) do
+          = fa_icon 'cog', class: 'icon'
+  .groups
+    = render "partial/group"
+
+.chat
+  .header
+    .main__header__group
+      %p.main__header__group__name
+        group1
+      %p.main__header__group__members
+        Member: group1
+    .main__header__edit
+      .edit__btn Edit
+  .messages
+    = render partial: 'message', collection: @messages
+
+  .form
+    = form_for [@group, @message], html:{id: 'item_form'} do |f|
+      = f.text_field :content, class: 'form__space', placeholder: 'type a message'
+      .form__icon
+        = f.label :image, class: 'form__icon__image' do
+          = fa_icon 'picture-o', class: 'icon'
+          = f.file_field :image, class: 'hidden',style:'display:none'
+      = f.submit 'Send', class: 'form__button'
